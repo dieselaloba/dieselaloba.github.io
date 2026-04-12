@@ -1,6 +1,7 @@
 const reveals = document.querySelectorAll(".reveal");
 const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".nav-links a");
+const nav = document.querySelector(".nav");
 
 function revealSections() {
   const windowHeight = window.innerHeight;
@@ -40,6 +41,12 @@ function updateActiveNav() {
 function handleScrollEffects() {
   revealSections();
   updateActiveNav();
+
+  if (window.scrollY > 20) {
+    nav.classList.add("scrolled");
+  } else {
+    nav.classList.remove("scrolled");
+  }
 }
 
 window.addEventListener("load", handleScrollEffects);
