@@ -18,31 +18,7 @@ function revealSections() {
   });
 }
 
-function updateActiveNav() {
-  let currentSection = "";
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 120;
-    const sectionHeight = section.offsetHeight;
-
-    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-      currentSection = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-
-    if (link.getAttribute("href") === `#${currentSection}`) {
-      link.classList.add("active");
-    }
-  });
-}
-
-function handleScrollEffects() {
-  revealSections();
-  updateActiveNav();
-
+function updateNavOnScroll() {
   if (window.scrollY > 20) {
     nav.classList.add("scrolled");
   } else {
@@ -54,11 +30,49 @@ function handleScrollEffects() {
   } else {
     backToTop.classList.remove("show");
   }
+
+  const scrollPosition = window.scrollY + 140;
+  let currentSection = "";
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionBottom = sectionTop + section.offsetHeight;
+
+    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+      currentSection = section.id;
+    }
+  });
+
+  const nearBottom =
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 20;
+
+  if (nearBottom) {
+    currentSection = "contact";
+  }
+
+  navLinks.forEach((link) => {
+    link.classList.toggle(
+      "active",
+      link.dataset.section === currentSection
+    );
+  });
 }
 
-window.addEventListener("load", handleScrollEffects);
-window.addEventListener("scroll", handleScrollEffects);
-window.addEventListener("resize", handleScrollEffects);
+window.addEventListener("load", () => {
+  revealSections();
+  updateNavOnScroll();
+
+  if (window.location.hash) {
+    history.replaceState(null, "", window.location.pathname);
+  }
+});
+
+window.addEventListener("scroll", () => {
+  revealSections();
+  updateNavOnScroll();
+});
+
+window.addEventListener("resize", updateNavOnScroll);
 
 backToTop.addEventListener("click", () => {
   window.scrollTo({
@@ -74,16 +88,16 @@ navLinks.forEach((link) => {
     const targetId = this.dataset.section;
     const target = document.getElementById(targetId);
 
-    if (target) {
-      const offset = 90;
-      const top = target.offsetTop - offset;
+    if (!target) return;
 
-      window.scrollTo({
-        top: top,
-        behavior: "smooth"
-      });
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
 
-      history.replaceState(null, null, window.location.pathname);
-    }
+    setTimeout(() => {
+      history.replaceState(null, "", window.location.pathname);
+      updateNavOnScroll();
+    }, 450);
   });
 });
