@@ -42,6 +42,7 @@ body {
     var(--bg);
   color: var(--white);
   padding-bottom: 72px;
+  padding-top: 80px;
 }
 
 .nav {
