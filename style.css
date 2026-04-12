@@ -363,3 +363,50 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Card hover polish */
+.project-card,
+.about-card,
+.tool-card,
+.cert-card,
+.experience-item {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-card:hover,
+.about-card:hover,
+.tool-card:hover,
+.cert-card:hover,
+.experience-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+}
+
+
+/* Button polish */
+.btn {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
