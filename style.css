@@ -679,8 +679,8 @@ body {
 
 @media (max-width: 900px) {
   .hero {
-    padding-top: 56px;
-    padding-bottom: 48px;
+    padding-top: 48px;
+    padding-bottom: 40px;
   }
 
   .hero-content {
