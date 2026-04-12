@@ -2,6 +2,7 @@ const reveals = document.querySelectorAll(".reveal");
 const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".nav-links a");
 const nav = document.querySelector(".nav");
+const backToTop = document.getElementById("backToTop");
 
 function revealSections() {
   const windowHeight = window.innerHeight;
@@ -47,25 +48,42 @@ function handleScrollEffects() {
   } else {
     nav.classList.remove("scrolled");
   }
+
+  if (window.scrollY > 300) {
+    backToTop.classList.add("show");
+  } else {
+    backToTop.classList.remove("show");
+  }
 }
 
 window.addEventListener("load", handleScrollEffects);
 window.addEventListener("scroll", handleScrollEffects);
 window.addEventListener("resize", handleScrollEffects);
 
-const backToTop = document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    backToTop.classList.add("show");
-  } else {
-    backToTop.classList.remove("show");
-  }
-});
-
 backToTop.addEventListener("click", () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth"
+  });
+});
+
+navLinks.forEach((link) => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const targetId = this.dataset.section;
+    const target = document.getElementById(targetId);
+
+    if (target) {
+      const offset = 90;
+      const top = target.offsetTop - offset;
+
+      window.scrollTo({
+        top: top,
+        behavior: "smooth"
+      });
+
+      history.replaceState(null, null, window.location.pathname);
+    }
   });
 });
