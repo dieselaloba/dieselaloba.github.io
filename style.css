@@ -463,3 +463,28 @@ body {
 .nav.scrolled {
   background: rgba(11, 16, 32, 0.9);
 }
+
+section {
+  scroll-margin-top: 100px;
+}
+
+.hero {
+  padding-top: 100px;
+}
+
+.footer {
+  margin-top: 60px;
+  padding: 24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: #0b1020;
+}
+
+.footer-inner {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.footer {
+  opacity: 0.8;
+}
