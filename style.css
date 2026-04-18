@@ -150,7 +150,7 @@ body {
 .hero {
   background: var(--bg);
   color: var(--white);
-  padding: 62px 0 48px;
+  padding: 65px 0 65px;
   display: flex;
   justify-content: center;
 }
@@ -869,3 +869,33 @@ body {
   }
 }
 
+/* MAIN project image */
+.project-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* GALLERY images */
+.project-gallery img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 👈 uniform square */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .project-image {
+    aspect-ratio: 4 / 3; /* stays clean */
+  }
+
+  .project-gallery {
+    grid-template-columns: repeat(2, 1fr); /* 2x grid */
+    gap: 8px;
+  }
+
+  .project-gallery img {
+    aspect-ratio: 1 / 1; /* 👈 uniform grid */
+  }
+}
