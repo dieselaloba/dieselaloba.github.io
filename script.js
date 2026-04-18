@@ -101,3 +101,51 @@ navLinks.forEach((link) => {
     }, 450);
   });
 });
+
+const lightbox = document.getElementById("imageLightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxClose = document.getElementById("lightboxClose");
+
+function openLightbox(src, altText = "") {
+  if (!lightbox || !lightboxImage) return;
+
+  lightboxImage.src = src;
+  lightboxImage.alt = altText;
+  lightbox.classList.add("show");
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  if (!lightbox || !lightboxImage) return;
+
+  lightbox.classList.remove("show");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightboxImage.src = "";
+  lightboxImage.alt = "";
+  document.body.style.overflow = "";
+}
+
+document.querySelectorAll(".project-image, .project-gallery img").forEach((img) => {
+  img.addEventListener("click", () => {
+    openLightbox(img.src, img.alt);
+  });
+});
+
+if (lightboxClose) {
+  lightboxClose.addEventListener("click", closeLightbox);
+}
+
+if (lightbox) {
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeLightbox();
+  }
+});
