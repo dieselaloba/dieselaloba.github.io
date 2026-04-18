@@ -19,16 +19,20 @@ function revealSections() {
 }
 
 function updateNavOnScroll() {
-  if (window.scrollY > 20) {
-    nav.classList.add("scrolled");
-  } else {
-    nav.classList.remove("scrolled");
+  if (nav) {
+    if (window.scrollY > 20) {
+      nav.classList.add("scrolled");
+    } else {
+      nav.classList.remove("scrolled");
+    }
   }
 
-  if (window.scrollY > 300) {
-    backToTop.classList.add("show");
-  } else {
-    backToTop.classList.remove("show");
+  if (backToTop) {
+    if (window.scrollY > 300) {
+      backToTop.classList.add("show");
+    } else {
+      backToTop.classList.remove("show");
+    }
   }
 
   const scrollPosition = window.scrollY + 140;
@@ -51,14 +55,12 @@ function updateNavOnScroll() {
   }
 
   navLinks.forEach((link) => {
-    link.classList.toggle(
-      "active",
-      link.dataset.section === currentSection
-    );
+    link.classList.toggle("active", link.dataset.section === currentSection);
   });
 }
 
 window.addEventListener("load", () => {
+  document.body.style.overflow = "";
   revealSections();
   updateNavOnScroll();
 
@@ -74,12 +76,14 @@ window.addEventListener("scroll", () => {
 
 window.addEventListener("resize", updateNavOnScroll);
 
-backToTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+if (backToTop) {
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   });
-});
+}
 
 navLinks.forEach((link) => {
   link.addEventListener("click", function (e) {
@@ -88,7 +92,7 @@ navLinks.forEach((link) => {
     const targetId = this.dataset.section;
     const target = document.getElementById(targetId);
 
-    if (!target) return;
+    if (!target || !nav) return;
 
     const navHeight = nav.offsetHeight;
     const extraOffset = 16;
@@ -112,7 +116,7 @@ const lightboxImage = document.getElementById("lightboxImage");
 const lightboxClose = document.getElementById("lightboxClose");
 
 function openLightbox(src, altText = "") {
-  if (!lightbox || !lightboxImage) return;
+  if (!lightbox || !lightboxImage || !src) return;
 
   lightboxImage.src = src;
   lightboxImage.alt = altText;
@@ -154,3 +158,28 @@ document.addEventListener("keydown", (e) => {
     closeLightbox();
   }
 });
+
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("formStatus");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    formStatus.textContent = "Sending...";
+
+    emailjs.sendForm(
+      "service_opkzx11",
+      "template_gpppw9a",
+      contactForm
+    )
+    .then(() => {
+      formStatus.textContent = "Message sent. I’ll get back to you shortly.";
+      contactForm.reset();
+    })
+    .catch((error) => {
+      console.error(error);
+      formStatus.textContent = "Failed to send. Try again.";
+    });
+  });
+}
