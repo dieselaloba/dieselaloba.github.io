@@ -90,9 +90,14 @@ navLinks.forEach((link) => {
 
     if (!target) return;
 
-    target.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+    const navHeight = nav.offsetHeight;
+    const extraOffset = 16;
+    const targetTop =
+      target.getBoundingClientRect().top + window.scrollY - navHeight - extraOffset;
+
+    window.scrollTo({
+      top: targetTop,
+      behavior: "smooth"
     });
 
     setTimeout(() => {
