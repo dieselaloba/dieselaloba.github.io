@@ -142,7 +142,7 @@ body {
 }
 
 body {
-  padding-top: 56px;
+  padding-top: 48px;
   overflow-x: hidden;
 }
 
@@ -150,7 +150,7 @@ body {
 .hero {
   background: var(--bg);
   color: var(--white);
-  padding: 64px 0 48px;
+  padding: 62px 0 48px;
   display: flex;
   justify-content: center;
 }
