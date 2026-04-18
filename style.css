@@ -785,11 +785,6 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .project-image,
-  .project-gallery img {
-    height: auto;
-  }
-}
 .project-image {
   width: 100%;
   height: 260px;
@@ -801,14 +796,14 @@ body {
 
 .project-gallery {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 14px;
 }
 
 .project-gallery img {
   width: 100%;
-  height: 140px;
+  height: 150px;
   object-fit: cover;
   border-radius: 10px;
   border: 1px solid var(--line);
@@ -823,16 +818,6 @@ body {
 
 @media (max-width: 900px) {
   .project-gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .project-image {
-    height: 220px;
-  }
-}
-
-@media (max-width: 640px) {
-  .project-gallery {
     grid-template-columns: 1fr;
   }
 
@@ -840,4 +825,5 @@ body {
   .project-gallery img {
     height: auto;
   }
+}
 }
