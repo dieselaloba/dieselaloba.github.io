@@ -37,7 +37,7 @@ body {
 .container {
   max-width: 1200px;
   width: 100%;
-  padding: 0 32px;  /* 👈 consistent side spacing */
+  padding: 0 48px;  /* 👈 consistent side spacing */
   margin: 0 auto;
 }
 .section {
@@ -112,6 +112,12 @@ body {
   color: var(--accent-soft);
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding:20px 20px; /* 👈 sweet spot for mobile */
+  }
+}
+
 /* MOBILE: allow second row */
 @media (max-width: 768px) {
   .nav-inner {
@@ -130,7 +136,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 6px 35px; /* row gap, column gap */
+    gap: 14px 35px; /* row gap, column gap */
     overflow: visible;
     white-space: normal;
   }
