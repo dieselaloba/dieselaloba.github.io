@@ -861,3 +861,51 @@ body {
     height: 140px;
   }
 }
+
+.nav {
+  position: fixed; /* or sticky if you prefer */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+body {
+  padding-top: 80px; /* adjust based on nav height */
+}
+
+.nav {
+  padding: 12px 24px;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 10px 16px;
+  }
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+}
+
+.nav.scrolled {
+  padding: 8px 20px;
+  background: rgba(11, 16, 32, 0.9);
+  backdrop-filter: blur(10px);
+}
