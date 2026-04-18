@@ -4,6 +4,13 @@ const navLinks = document.querySelectorAll(".nav-links a");
 const nav = document.querySelector(".nav");
 const backToTop = document.getElementById("backToTop");
 
+const lightbox = document.getElementById("imageLightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxClose = document.getElementById("lightboxClose");
+
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("formStatus");
+
 function revealSections() {
   const windowHeight = window.innerHeight;
 
@@ -20,22 +27,14 @@ function revealSections() {
 
 function updateNavOnScroll() {
   if (nav) {
-    if (window.scrollY > 20) {
-      nav.classList.add("scrolled");
-    } else {
-      nav.classList.remove("scrolled");
-    }
+    nav.classList.toggle("scrolled", window.scrollY > 20);
   }
 
   if (backToTop) {
-    if (window.scrollY > 300) {
-      backToTop.classList.add("show");
-    } else {
-      backToTop.classList.remove("show");
-    }
+    backToTop.classList.toggle("show", window.scrollY > 300);
   }
 
-  const scrollPosition = window.scrollY + 140;
+  const scrollPosition = window.scrollY + (nav ? nav.offsetHeight : 0) + 24;
   let currentSection = "";
 
   sections.forEach((section) => {
@@ -48,7 +47,7 @@ function updateNavOnScroll() {
   });
 
   const nearBottom =
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 20;
+    window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 20;
 
   if (nearBottom) {
     currentSection = "contact";
@@ -57,6 +56,46 @@ function updateNavOnScroll() {
   navLinks.forEach((link) => {
     link.classList.toggle("active", link.dataset.section === currentSection);
   });
+}
+
+function scrollToSection(targetId) {
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  const navHeight = nav ? nav.offsetHeight : 0;
+  const extraOffset = 16;
+  const targetTop =
+    target.getBoundingClientRect().top + window.scrollY - navHeight - extraOffset;
+
+  window.scrollTo({
+    top: targetTop,
+    behavior: "smooth"
+  });
+
+  setTimeout(() => {
+    history.replaceState(null, "", window.location.pathname);
+    updateNavOnScroll();
+  }, 450);
+}
+
+function openLightbox(src, altText = "") {
+  if (!lightbox || !lightboxImage || !src) return;
+
+  lightboxImage.src = src;
+  lightboxImage.alt = altText;
+  lightbox.classList.add("show");
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  if (!lightbox || !lightboxImage) return;
+
+  lightbox.classList.remove("show");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightboxImage.src = "";
+  lightboxImage.alt = "";
+  document.body.style.overflow = "";
 }
 
 window.addEventListener("load", () => {
@@ -86,54 +125,11 @@ if (backToTop) {
 }
 
 navLinks.forEach((link) => {
-  link.addEventListener("click", function (e) {
+  link.addEventListener("click", (e) => {
     e.preventDefault();
-
-    const targetId = this.dataset.section;
-    const target = document.getElementById(targetId);
-
-    if (!target || !nav) return;
-
-    const navHeight = nav.offsetHeight;
-    const extraOffset = 16;
-    const targetTop =
-      target.getBoundingClientRect().top + window.scrollY - navHeight - extraOffset;
-
-    window.scrollTo({
-      top: targetTop,
-      behavior: "smooth"
-    });
-
-    setTimeout(() => {
-      history.replaceState(null, "", window.location.pathname);
-      updateNavOnScroll();
-    }, 450);
+    scrollToSection(link.dataset.section);
   });
 });
-
-const lightbox = document.getElementById("imageLightbox");
-const lightboxImage = document.getElementById("lightboxImage");
-const lightboxClose = document.getElementById("lightboxClose");
-
-function openLightbox(src, altText = "") {
-  if (!lightbox || !lightboxImage || !src) return;
-
-  lightboxImage.src = src;
-  lightboxImage.alt = altText;
-  lightbox.classList.add("show");
-  lightbox.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
-
-function closeLightbox() {
-  if (!lightbox || !lightboxImage) return;
-
-  lightbox.classList.remove("show");
-  lightbox.setAttribute("aria-hidden", "true");
-  lightboxImage.src = "";
-  lightboxImage.alt = "";
-  document.body.style.overflow = "";
-}
 
 document.querySelectorAll(".project-image, .project-gallery img").forEach((img) => {
   img.addEventListener("click", () => {
@@ -159,27 +155,21 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-const contactForm = document.getElementById("contactForm");
-const formStatus = document.getElementById("formStatus");
-
-if (contactForm) {
+if (contactForm && formStatus) {
   contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     formStatus.textContent = "Sending...";
 
-    emailjs.sendForm(
-      "service_opkzx11",
-      "template_gpppw9a",
-      contactForm
-    )
-    .then(() => {
-      formStatus.textContent = "Message sent. I’ll get back to you shortly.";
-      contactForm.reset();
-    })
-    .catch((error) => {
-      console.error(error);
-      formStatus.textContent = "Failed to send. Try again.";
-    });
+    emailjs
+      .sendForm("service_opkzx11", "template_gpppw9a", contactForm)
+      .then(() => {
+        formStatus.textContent = "Message sent. I’ll get back to you shortly.";
+        contactForm.reset();
+      })
+      .catch((error) => {
+        console.error("EmailJS error:", error);
+        formStatus.textContent = "Failed to send. Try again.";
+      });
   });
 }
