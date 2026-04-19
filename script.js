@@ -196,4 +196,6 @@ if (contactForm && formStatus) {
         formStatus.textContent = "Failed to send. Try again.";
       });
   });
+
+  
 }

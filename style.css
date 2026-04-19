@@ -919,10 +919,11 @@ body {
 
 @media (max-width: 768px) {
   .hero-text,
+  .about-card,
   .about-intro p,
   .project-card p,
   .contact-intro {
-    text-align: left;
+    text-align: justify;
   }
 
   #hero {
