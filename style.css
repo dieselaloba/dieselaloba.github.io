@@ -124,7 +124,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    padding: 10px 0;
+    padding: 10px 10px;
   }
 
   .brand {
@@ -933,4 +933,14 @@ body {
 
 #heroText {
   scroll-margin-top: 100px;
+}
+
+.brand a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.brand a:hover {
+  opacity: 0.8;
 }

@@ -11,6 +11,9 @@ const lightboxClose = document.getElementById("lightboxClose");
 const contactForm = document.getElementById("contactForm");
 const formStatus = document.getElementById("formStatus");
 
+/* ✅ NEW: brand click (acts like nav) */
+const brandTop = document.getElementById("brandTop");
+
 function revealSections() {
   const windowHeight = window.innerHeight;
 
@@ -124,6 +127,7 @@ if (backToTop) {
   });
 }
 
+/* ✅ NAV LINKS */
 navLinks.forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
@@ -155,6 +159,15 @@ navLinks.forEach((link) => {
   });
 });
 
+/* ✅ NEW: BRAND CLICK HANDLER */
+if (brandTop) {
+  brandTop.addEventListener("click", (e) => {
+    e.preventDefault();
+    scrollToSection("hero");
+  });
+}
+
+/* IMAGES */
 document.querySelectorAll(".project-image, .project-gallery img").forEach((img) => {
   img.addEventListener("click", () => {
     openLightbox(img.src, img.alt);
@@ -179,6 +192,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+/* EMAIL */
 if (contactForm && formStatus) {
   contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -195,7 +209,5 @@ if (contactForm && formStatus) {
         console.error("EmailJS error:", error);
         formStatus.textContent = "Failed to send. Try again.";
       });
-  });
-
-  
+  }); 
 }
