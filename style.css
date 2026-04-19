@@ -136,7 +136,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 14px 35px; /* row gap, column gap */
+    gap: 14px 36px; /* row gap, column gap */
     overflow: visible;
     white-space: normal;
   }
@@ -904,4 +904,32 @@ body {
   .project-gallery img {
     aspect-ratio: 1 / 1; /* 👈 uniform grid */
   }
+}
+.hero-text,
+.about-intro p,
+.project-card p,
+.contact-intro {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+#hero {
+  scroll-margin-top: 80px;
+}
+
+@media (max-width: 768px) {
+  .hero-text,
+  .about-intro p,
+  .project-card p,
+  .contact-intro {
+    text-align: left;
+  }
+
+  #hero {
+    scroll-margin-top: 100px;
+  }
+}
+
+#heroText {
+  scroll-margin-top: 100px;
 }

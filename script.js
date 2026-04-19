@@ -1,5 +1,5 @@
 const reveals = document.querySelectorAll(".reveal");
-const sections = document.querySelectorAll("section[id]");
+const sections = document.querySelectorAll("section[id], header[id]");
 const navLinks = document.querySelectorAll(".nav-links a");
 const nav = document.querySelector(".nav");
 const backToTop = document.getElementById("backToTop");
@@ -127,6 +127,30 @@ if (backToTop) {
 navLinks.forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
+
+    const isResume = link.id === "resumeNav";
+
+    if (isResume && window.innerWidth <= 768) {
+      const target = document.getElementById("heroText");
+      if (!target) return;
+
+      const navHeight = nav ? nav.offsetHeight : 0;
+      const targetTop =
+        target.getBoundingClientRect().top + window.scrollY - navHeight - 10;
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: "smooth"
+      });
+
+      setTimeout(() => {
+        history.replaceState(null, "", window.location.pathname);
+        updateNavOnScroll();
+      }, 450);
+
+      return;
+    }
+
     scrollToSection(link.dataset.section);
   });
 });
