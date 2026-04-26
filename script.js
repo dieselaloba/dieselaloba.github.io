@@ -216,11 +216,18 @@ const resumeDownload = document.querySelector('#resume a[download]');
 
 if (resumeDownload) {
   resumeDownload.addEventListener('click', () => {
+    console.log("Resume download clicked");
+
     if (typeof gtag === 'function') {
       gtag('event', 'resume_download', {
         event_category: 'engagement',
-        event_label: 'Hero Resume Button'
+        event_label: 'Hero Resume Button',
+        transport_type: 'beacon'
       });
+
+      console.log("resume_download sent to GA");
+    } else {
+      console.log("gtag not found");
     }
   });
 }
