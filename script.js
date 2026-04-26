@@ -211,3 +211,16 @@ if (contactForm && formStatus) {
       });
   }); 
 }
+
+const resumeDownload = document.querySelector('#resume a[download]');
+
+if (resumeDownload) {
+  resumeDownload.addEventListener('click', () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'resume_download', {
+        event_category: 'engagement',
+        event_label: 'Hero Resume Button'
+      });
+    }
+  });
+}
